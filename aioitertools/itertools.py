@@ -508,7 +508,7 @@ def tee(itr: AnyIterable[T], n: int = 2) -> Tuple[AsyncIterator[T], ...]:
                 await asyncio.gather(*[queue.put((True, value)) for queue in queues[1:]])
                 raise
 
-            await asyncio.gather(*[queue.put(sentinel) for queue in queues[1:]])
+            await asyncio.gather(*[queue.put((False, sentinel)) for queue in queues[1:]])
 
         else:
             while True:
