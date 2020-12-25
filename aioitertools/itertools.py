@@ -505,7 +505,7 @@ def tee(itr: AnyIterable[T], n: int = 2) -> Tuple[AsyncIterator[T], ...]:
                     await asyncio.gather(*[queue.put((False, value)) for queue in queues[1:]])
                     yield value
             except Exception as e:
-                await asyncio.gather(*[queue.put((True, value)) for queue in queues[1:]])
+                await asyncio.gather(*[queue.put((True, e)) for queue in queues[1:]])
                 raise
 
             await asyncio.gather(*[queue.put((False, sentinel)) for queue in queues[1:]])
